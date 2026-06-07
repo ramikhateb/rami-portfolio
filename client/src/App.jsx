@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
+
+const CV_URL = "/cv/RamiKhatib_CV.pdf";
 
 const projects = [
   {
@@ -75,8 +77,25 @@ function SectionHeader({ label, title }) {
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    if (!cvOpen) return;
+
+    const handleEscape = (e) => {
+      if (e.key === "Escape") setCvOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [cvOpen]);
 
   return (
     <>
@@ -116,7 +135,7 @@ export default function Portfolio() {
             </p>
             <div className="cta">
               <a className="btn primary" href="#projects">View Projects</a>
-              <a className="btn" href="/cv/ramikhateb_CV copy.pdf" download>Download CV</a>
+              <button type="button" className="btn" onClick={() => setCvOpen(true)}>Show CV</button>
               <a className="btn" href="mailto:ramikhateb39@gmail.com">Email Me</a>
             </div>
           </div>
@@ -271,6 +290,31 @@ export default function Portfolio() {
       <footer className="footer">
         <div className="container">© {new Date().getFullYear()} Rami Khateb · Built with React & Vite</div>
       </footer>
+
+      {cvOpen && (
+        <div className="cv-modal-overlay" onClick={() => setCvOpen(false)} role="presentation">
+          <div
+            className="cv-modal"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cv-modal-title"
+          >
+            <div className="cv-modal-header">
+              <h2 id="cv-modal-title">My CV</h2>
+              <div className="cv-modal-actions">
+                <a className="btn" href={CV_URL} download>Download</a>
+                <button type="button" className="btn" onClick={() => setCvOpen(false)}>Close</button>
+              </div>
+            </div>
+            <iframe
+              className="cv-modal-frame"
+              src={CV_URL}
+              title="Rami Khateb CV"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
