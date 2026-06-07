@@ -1,16 +1,58 @@
-# React + Vite
+# My Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Full-stack portfolio monorepo with a React client and Express API server.
 
-Currently, two official plugins are available:
+## Project structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+my-portfolio/
+├── client/          # React + Vite frontend
+│   ├── public/
+│   ├── src/
+│   ├── index.html
+│   └── package.json
+├── server/          # Express API
+│   ├── index.js
+│   └── package.json
+└── package.json     # Root workspace scripts
+```
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies from the root:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Run both client and server in development:
+
+```bash
+npm run dev
+```
+
+Or run them separately:
+
+```bash
+npm run dev:client   # http://localhost:5173
+npm run dev:server   # http://localhost:3001
+```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start client and server together |
+| `npm run dev:client` | Start Vite dev server only |
+| `npm run dev:server` | Start Express API only |
+| `npm run build` | Build client for production |
+| `npm run start` | Start production server |
+
+## API
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| POST | `/api/contact` | Contact form submission |
+
+During development, Vite proxies `/api/*` requests to the server on port 3001.
