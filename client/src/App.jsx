@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const CV_URL = "/cv/RamiKhatib_CV.pdf";
+const CV_URL = `${import.meta.env.BASE_URL}cv/RamiKhatib_CV.pdf`;
 
 const projects = [
   {
